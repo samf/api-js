@@ -1,0 +1,22 @@
+{
+  "name": "@efmrl/api-js",
+  "version": "1.0.0",
+  "description": "API for efmrls to interact with efmrl.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"not yet\"; exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samf/api-js.git"
+  },
+  "keywords": [
+    "efmrl"
+  ],
+  "author": "Sam Falkner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samf/api-js/issues"
+  },
+  "homepage": "https://github.com/samf/api-js#readme"
+}
