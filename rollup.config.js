@@ -16,7 +16,6 @@ const config = {
   ],
   external: [
     "axios",
-    "@babel/runtime",
   ],
 };
 
