@@ -4,7 +4,8 @@
   "description": "API for efmrls to interact with efmrl.com",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"not yet\"; exit 1"
+    "build": "rollup -c",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/samf/api-js/issues"
   },
-  "homepage": "https://github.com/samf/api-js#readme"
+  "homepage": "https://github.com/samf/api-js#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
+    "@rollup/plugin-babel": "^5.2.1"
+  }
 }
