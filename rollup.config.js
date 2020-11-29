@@ -1,3 +1,6 @@
+import commonjs from '@rollup/plugin-commonjs';
+import nodeResolve from '@rollup/plugin-node-resolve';
+
 import babel from '@rollup/plugin-babel';
 
 const config = {
@@ -6,7 +9,15 @@ const config = {
     dir: 'output',
     format: 'esm'
   },
-  plugins: [babel({ babelHelpers: 'bundled' })]
+  plugins: [
+    commonjs(),
+    nodeResolve({ preferBuiltins: false }),
+    babel({ babelHelpers: 'runtime' })
+  ],
+  external: [
+    "axios",
+    "@babel/runtime",
+  ],
 };
 
 export default config;
