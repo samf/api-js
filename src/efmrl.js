@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class Efmrl {
+export class Efmrl {
   constructor() {
     this.subefmrl = false;
     this.origin = window.location.origin;

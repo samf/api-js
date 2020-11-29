@@ -1,22 +1,38 @@
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
-
 import babel from '@rollup/plugin-babel';
+import pkg from './package.json';
 
-const config = {
-  input: 'src/efmrl.js',
-  output: {
-    dir: 'output',
-    format: 'esm'
+export default [
+  {
+    input: 'src/efmrl.js',
+    output: {
+      name: 'efmrl',
+      file: pkg.browser,
+      format: 'esm'
+    },
+    plugins: [
+      commonjs(),
+      nodeResolve({ preferBuiltins: false }),
+      babel({ babelHelpers: 'runtime' })
+    ],
+    external: [
+      "axios",
+    ],
   },
-  plugins: [
-    commonjs(),
-    nodeResolve({ preferBuiltins: false }),
-    babel({ babelHelpers: 'runtime' })
-  ],
-  external: [
-    "axios",
-  ],
-};
-
-export default config;
+  {
+    input: 'src/efmrl.js',
+    output: [
+      { file: pkg.main, format: 'cjs' },
+      { file: pkg.module, format: 'es' }
+    ],
+    plugins: [
+      commonjs(),
+      nodeResolve({ preferBuiltins: false }),
+      babel({ babelHelpers: 'runtime' })
+    ],
+    external: [
+      "axios",
+    ],
+  }
+];

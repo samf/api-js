@@ -1,8 +1,13 @@
 {
   "name": "@efmrl/api-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "API for efmrls to interact with efmrl.com",
-  "main": "index.js",
+  "main": "dist/efmrl.cjs.js",
+  "module": "dist/efmrl.esm.js",
+  "browser": "dist/efmrl.umd.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rollup -c",
     "test": "jest"
