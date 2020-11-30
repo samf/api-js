@@ -2,36 +2,14 @@ import axios from "axios";
 
 export class Efmrl {
   constructor() {
-    this.subefmrl = false;
-    this.origin = window.location.origin;
-    this.roles = new Array();
-    this.noRole = new Array();
-
-    return (async () => {
-      const now = new Date();
-      const nownow = now.getTime();
-      const location = window.location.pathname;
-      const url = `${location}?${nownow}`;
-      const res = await axios.head(url, {
-        query: now.getTime(),
-      });
-
-      this.ename = res.headers["x-efmrl-name"];
-      this.apibase = res.headers["x-efmrl-api"];
-
-      if (this.apibase.includes("/sb/")) {
-        this.subefmrl = true;
-      }
-
-      return this;
-    })();
+    this.meta = new Meta();
   }
 
-  apipath(which) {
-    return `${this.apibase}${which}`;
+  apipath(meta, which) {
+    return `${meta.apibase}${which}`;
   }
 
-  static staticpath(which) {
+  staticpath(which) {
     return `/efmrl-api/${which}`;
   }
 
