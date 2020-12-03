@@ -71,13 +71,13 @@ export class Efmrl {
   }
 
   async postData(payload) {
-    const apipath = this.apipath("d");
+    const apipath = await this.apipath("d");
 
     return axios.post(apipath, payload);
   }
 
   async listData() {
-    const path = this.apipath("ld");
+    const path = await this.apipath("ld");
     const payload = {};
 
     return axios.post(path, payload);
@@ -87,9 +87,9 @@ export class Efmrl {
     let apipath;
 
     if (path !== undefined) {
-      apipath = this.apipath(`d/${path}`);
+      apipath = await this.apipath(`d/${path}`);
     } else {
-      apipath = this.apipath("d");
+      apipath = await this.apipath("d");
     }
 
     return axios.delete(apipath);
@@ -97,7 +97,7 @@ export class Efmrl {
 
   // appstore catalog data; should probably rename
   async appdata() {
-    const apipath = this.apipath("p");
+    const apipath = await this.apipath("p");
 
     return axios.get(apipath);
   }
@@ -123,17 +123,17 @@ export class Efmrl {
   }
 
   async fund(req) {
-    const path = this.apipath("f");
+    const path = await this.apipath("f");
     return axios.post(path, req);
   }
 
   async liststatic() {
-    const path = this.apipath("ls");
+    const path = await this.apipath("ls");
     return axios.get(path);
   }
 
   async adminBundle() {
-    const path = this.apipath("ab");
+    const path = await this.apipath("ab");
     const res = await axios.get(path);
     if (res.status != 200) {
       throw "cannot get admin bundle";
@@ -145,12 +145,12 @@ export class Efmrl {
   }
 
   async updateEfmrl(efmrl) {
-    const path = this.apipath("a/u/efmrl");
+    const path = await this.apipath("a/u/efmrl");
     return axios.post(path, efmrl);
   }
 
   async updateAuthx(authx) {
-    const path = this.apipath("ax");
+    const path = await this.apipath("ax");
     const res = await axios.post(path, authx);
     if (res.status != 200) {
       throw "cannot save profiles";
@@ -162,31 +162,31 @@ export class Efmrl {
   }
 
   async spawn(req) {
-    const path = this.apipath("n");
+    const path = await this.apipath("n");
 
     return axios.post(path, req);
   }
 
   async authenticate(req) {
-    const path = this.apipath("an");
+    const path = await this.apipath("an");
 
     return axios.post(path, req);
   }
 
-  goToLogin() {
-    const path = this.apipath("an");
+  async goToLogin() {
+    const path = await this.apipath("an");
 
     window.location.replace(path);
   }
 
-  goToFund() {
-    const path = this.apipath("f");
+  async goToFund() {
+    const path = await this.apipath("f");
 
     window.location.replace(path);
   }
 
   async logout() {
-    const path = this.apipath("an");
+    const path = await this.apipath("an");
 
     axios.delete(path).then(() => window.location.reload(false));
   }
@@ -201,7 +201,7 @@ export class Efmrl {
   }
 
   async getAllAuth() {
-    const path = this.apipath("ax");
+    const path = await this.apipath("ax");
 
     const authxRes = await axios.get(path);
     this.useAuthxBundle(authxRes.data);
@@ -224,7 +224,7 @@ export class Efmrl {
   }
 
   async saveAllAuth() {
-    const path = this.apipath("ax");
+    const path = await this.apipath("ax");
 
     const authxBundle = {
       roles: this.roles,
@@ -277,14 +277,14 @@ export class Efmrl {
     return null;
   }
 
-  credReset() {
-    const path = this.apipath("cr");
+  async credReset() {
+    const path = await this.apipath("cr");
 
     window.location.replace(path);
   }
 
   async credResetInfo() {
-    const path = this.apipath("ri");
+    const path = await this.apipath("ri");
 
     const res = await axios.get(path);
     return res.data;
