@@ -1,11 +1,14 @@
 import axios from "axios";
 
+import Meta from "./meta";
+
 export class Efmrl {
   constructor() {
     this.meta = new Meta();
   }
 
-  apipath(meta, which) {
+  async apipath(which) {
+    const meta = await this.meta;
     return `${meta.apibase}${which}`;
   }
 
@@ -14,13 +17,13 @@ export class Efmrl {
   }
 
   async metadata() {
-    const url = this.apipath("u/efmrl");
+    const url = await this.apipath("u/efmrl");
 
     return axios.get(url);
   }
 
   async addDomain(domain) {
-    const url = this.apipath("cd");
+    const url = await this.apipath("cd");
     const payload = {
       domain: domain,
     };
@@ -29,13 +32,13 @@ export class Efmrl {
   }
 
   async getDomains() {
-    const url = this.apipath("cd");
+    const url = await this.apipath("cd");
 
     return axios.get(url);
   }
 
   async deleteDomain(domain) {
-    const url = this.apipath("cd");
+    const url = await this.apipath("cd");
     const payload = {
       domain: domain,
     };
@@ -47,9 +50,9 @@ export class Efmrl {
     let apipath;
 
     if (path !== undefined) {
-      apipath = this.apipath(`d/${path}`);
+      apipath = await this.apipath(`d/${path}`);
     } else {
-      apipath = this.apipath("d");
+      apipath = await this.apipath("d");
     }
 
     return axios.get(apipath);
@@ -59,9 +62,9 @@ export class Efmrl {
     let apipath;
 
     if (path !== undefined) {
-      apipath = this.apipath(`d/${path}`);
+      apipath = await this.apipath(`d/${path}`);
     } else {
-      apipath = this.apipath("d");
+      apipath = await this.apipath("d");
     }
 
     return axios.put(apipath, payload);
