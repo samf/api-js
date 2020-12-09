@@ -1,23 +1,8 @@
-import { TOTP } from "./efmrl.js";
+import mockAxios from "jest-mock-axios";
+import { Efmrl } from "./efmrl.js";
 
-test("the universe exists", () => {
-  expect(0).toBe(0);
-  expect(TOTP).not.toBe(undefined);
-});
+it("gets the meta", async () => {
+  const eh = new Efmrl();
 
-async function tiddles() {
-  return 7;
-}
-
-// delete this test and "tiddles()" later on
-test("multi awaited promise", async () => {
-  const tt = tiddles();
-  let t = await tt;
-  expect(t).toBe(7);
-
-  t = await tt;
-  expect(t).toBe(7);
-
-  const w = await tt;
-  expect(w).toBe(7);
+  expect(eh.meta).toBeTruthy();
 });

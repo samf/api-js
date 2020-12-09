@@ -1,10 +1,13 @@
 import axios from "axios";
 
-import Meta from "./meta";
+import { Meta } from "./meta.js";
 
 export class Efmrl {
   constructor() {
     this.meta = new Meta();
+
+    this.roles = new Array();
+    this.noRole = new Array();
   }
 
   async apipath(which) {

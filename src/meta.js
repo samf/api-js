@@ -4,8 +4,6 @@ export class Meta {
   constructor() {
     this.subefmrl = false;
     this.origin = window.location.origin;
-    this.roles = new Array();
-    this.noRole = new Array();
 
     return (async () => {
       const now = new Date();
