@@ -86,6 +86,15 @@ export class Efmrl {
     return axios.post(path, payload);
   }
 
+  async getAllData() {
+    const path = await this.apipath("ad");
+    const payload = {
+      include_data: true,
+    };
+
+    return axios.post(path, payload);
+  }
+
   async deleteData(path) {
     let apipath;
 
