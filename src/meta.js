@@ -2,8 +2,7 @@ import axios from "axios";
 
 export class Meta {
   constructor() {
-    this.subefmrl = false;
-    this.origin = window.location.origin;
+    this.subefmrlVal = false;
 
     return (async () => {
       const now = new Date();
@@ -14,14 +13,30 @@ export class Meta {
         query: now.getTime(),
       });
 
-      this.ename = res.headers["x-efmrl-name"];
-      this.apibase = res.headers["x-efmrl-api"];
+      this.enameVal = res.headers["x-efmrl-name"];
+      this.apibaseVal = res.headers["x-efmrl-api"];
 
-      if (this.apibase.includes("/sb/")) {
-        this.subefmrl = true;
+      if (this.apibaseVal.includes("/sb/")) {
+        this.subefmrlVal = true;
       }
 
       return this;
     })();
+  }
+
+  subefmrl() {
+    return this.subefmrlVal;
+  }
+
+  apibase() {
+    return this.apibaseVal;
+  }
+
+  apipath(which) {
+    return `${this.apibaseVal}${which}`
+  }
+
+  ename() {
+    return this.enameVal;
   }
 }

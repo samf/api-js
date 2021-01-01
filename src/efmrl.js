@@ -12,7 +12,7 @@ export class Efmrl {
 
   async apipath(which) {
     const meta = await this.meta;
-    return `${meta.apibase}${which}`;
+    return meta.apipath(which);
   }
 
   staticpath(which) {
