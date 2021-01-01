@@ -4,6 +4,7 @@ import { Meta } from "./meta.js";
 
 export class Efmrl {
   constructor() {
+    // this.meta is a promise; see below for many examples
     this.meta = new Meta();
 
     this.roles = new Array();
@@ -203,9 +204,10 @@ export class Efmrl {
     axios.delete(path).then(() => window.location.reload(false));
   }
 
-  redirect() {
-    if (this.subefmrl) {
-      window.location.pathname = "/" + this.ename;
+  async redirect() {
+    const meta = await this.meta;
+    if (this.meta.subefmrl()) {
+      window.location.pathname = "/" + this.meta.ename();
       return;
     }
 
