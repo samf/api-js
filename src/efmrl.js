@@ -4,11 +4,40 @@ import { Meta } from "./meta.js";
 
 export class Efmrl {
   constructor() {
-    // this.meta is a promise; see below for many examples
-    this.meta = new Meta();
+    this.#subefmrl = null;
+    this.#apibase = null;
+    this.#ename = null;
 
     this.roles = new Array();
     this.noRole = new Array();
+
+    this.#ready = (async () => {
+      try {
+        const now = new Date();
+        const url = window.location.pathname;
+
+        const res = await axios.head(url, {
+          query: now.getTime(),
+        });
+
+        this.#apibase = res.headers["x-efmrl-api"];
+        this.#ename = res.headers["x-efmrl-name"];
+        this.#subefmrl = this.#apibase.includes("/sb/");
+      } catch (e) {
+        if (e.response) {
+          this.#apibase = e.response.headers["x-efmrl-api"];
+          this.#ename = e.response.headers["x-efmrl-name"];
+        } else {
+          const baseurl = new URL(window.location);
+          const host = baseurl.hostname;
+          const re = /(w+).efmrl.(w+)/;
+          this.#ename = host.replace(re, "$1");
+          baseurl.pathname = "/efmrl-api/";
+          this.#apibase = baseurl.toString();
+        }
+      }
+      this.#subefmrl = this.#apibase.includes("/sb/");
+    })();
   }
 
   async apipath(which) {
