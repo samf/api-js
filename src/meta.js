@@ -2,9 +2,11 @@ import axios from "axios";
 
 export class Meta {
   constructor() {
-    this.subefmrlVal = false;
+    this.#subefmrl = false;
+    this.#apibase = null;
+    this.#ename = null;
 
-    return (async () => {
+    this.#ready = (async () => {
       const now = new Date();
       const nownow = now.getTime();
       const location = window.location.pathname;
@@ -13,10 +15,10 @@ export class Meta {
         query: now.getTime(),
       });
 
-      this.enameVal = res.headers["x-efmrl-name"];
-      this.apibaseVal = res.headers["x-efmrl-api"];
+      this.#apibase = res.headers["x-efmrl-api"];
+      this.#ename = res.headers["x-efmrl-name"];
 
-      if (this.apibaseVal.includes("/sb/")) {
+      if (this.#apibase.includes("/sb/")) {
         this.subefmrlVal = true;
       }
 
@@ -24,19 +26,23 @@ export class Meta {
     })();
   }
 
-  subefmrl() {
-    return this.subefmrlVal;
+  async subefmrl() {
+    await this.#ready;
+    return this.#subefmrl;
   }
 
-  apibase() {
+  async apibase() {
+    await this.#ready;
     return this.apibaseVal;
   }
 
-  apipath(which) {
+  async apipath(which) {
+    await this.#ready;
     return `${this.apibaseVal}${which}`
   }
 
-  ename() {
+  async ename() {
+    await this.#ready;
     return this.enameVal;
   }
 }
