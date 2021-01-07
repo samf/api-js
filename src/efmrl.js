@@ -1,17 +1,15 @@
 import axios from "axios";
 
-import { Meta } from "./meta.js";
-
 export class Efmrl {
   constructor() {
-    this.#subefmrl = null;
-    this.#apibase = null;
-    this.#ename = null;
+    this._subefmrl = null;
+    this._apibase = null;
+    this._ename = null;
 
     this.roles = new Array();
     this.noRole = new Array();
 
-    this.#ready = (async () => {
+    this._ready = (async () => {
       try {
         const now = new Date();
         const url = window.location.pathname;
@@ -20,29 +18,29 @@ export class Efmrl {
           query: now.getTime(),
         });
 
-        this.#apibase = res.headers["x-efmrl-api"];
-        this.#ename = res.headers["x-efmrl-name"];
-        this.#subefmrl = this.#apibase.includes("/sb/");
+        this._apibase = res.headers["x-efmrl-api"];
+        this._ename = res.headers["x-efmrl-name"];
+        this._subefmrl = this._apibase.includes("/sb/");
       } catch (e) {
         if (e.response) {
-          this.#apibase = e.response.headers["x-efmrl-api"];
-          this.#ename = e.response.headers["x-efmrl-name"];
+          this._apibase = e.response.headers["x-efmrl-api"];
+          this._ename = e.response.headers["x-efmrl-name"];
         } else {
           const baseurl = new URL(window.location);
           const host = baseurl.hostname;
           const re = /(w+).efmrl.(w+)/;
-          this.#ename = host.replace(re, "$1");
+          this._ename = host.replace(re, "$1");
           baseurl.pathname = "/efmrl-api/";
-          this.#apibase = baseurl.toString();
+          this._apibase = baseurl.toString();
         }
       }
-      this.#subefmrl = this.#apibase.includes("/sb/");
+      this._subefmrl = this._apibase.includes("/sb/");
     })();
   }
 
   async apipath(which) {
-    const meta = await this.meta;
-    return meta.apipath(which);
+    await this._ready;
+    return `${this._apibase}${which}`
   }
 
   staticpath(which) {
