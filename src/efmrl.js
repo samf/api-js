@@ -22,17 +22,18 @@ export class Efmrl {
         this._ename = res.headers["x-efmrl-name"];
         this._subefmrl = this._apibase.includes("/sb/");
       } catch (e) {
-        if (e.response) {
+        if (e.response && e.response.headers) {
           this._apibase = e.response.headers["x-efmrl-api"];
           this._ename = e.response.headers["x-efmrl-name"];
-        } else {
-          const baseurl = new URL(window.location);
-          const host = baseurl.hostname;
-          const re = /(w+).efmrl.(w+)/;
-          this._ename = host.replace(re, "$1");
-          baseurl.pathname = "/efmrl-api/";
-          this._apibase = baseurl.toString();
         }
+      }
+
+      if (!this._apibase || !this._ename) {
+        const baseurl = new URL(window.location);
+        const host = baseurl.hostname;
+        const re = /(\w+).efmrl.(\w+)/;
+        this._ename = host.replace(re, "$1");
+        this._apibase = "/efmrl-api/";
       }
       this._subefmrl = this._apibase.includes("/sb/");
     })();
@@ -45,6 +46,11 @@ export class Efmrl {
 
   staticpath(which) {
     return `/efmrl-api/${which}`;
+  }
+
+  async ename() {
+    await this._ready;
+    return this._ename;
   }
 
   async metadata() {

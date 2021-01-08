@@ -5,13 +5,12 @@ afterEach(() => {
   mockAxios.reset();
 });
 
-it("sets ename and apibase", async () => {
+it("navigates the happy path", async () => {
   const eh = new Efmrl();
 
   expect(mockAxios.head).toHaveBeenCalled();
 
   const ename = "firehouse";
-  const apibase = "/efmrl-api/";
   mockAxios.mockResponse({
     headers: {
       "x-efmrl-name": ename,
@@ -20,7 +19,37 @@ it("sets ename and apibase", async () => {
   });
 
   expect(eh.apipath("u")).resolves.toBe("/efmrl-api/u")
+
   // or, the more usual case
   const url = await eh.apipath("u");
   expect(url).toEqual("/efmrl-api/u");
+
+  expect(eh.ename()).resolves.toBe(ename);
+});
+
+it("works if HEAD gets a 404", async () => {
+  const eh = new Efmrl();
+
+  mockAxios.mockResponse({
+      status: 404,
+      headers: {
+        "x-efmrl-name": "big-billy",
+        "x-efmrl-api": "/efmrl-api/",
+      },
+  });
+
+  expect(eh.apipath("u")).resolves.toBe("/efmrl-api/u");
+  expect(eh.ename()).resolves.toBe("big-billy");
+});
+
+it("works if HEAD fails outright", async () => {
+  const eh = new Efmrl();
+
+  delete window.location;
+  window.location = new URL("https://firetruck.efmrl.com/crags");
+
+  mockAxios.mockError("bad gorillas");
+
+  expect(eh.apipath("u")).resolves.toBe("/efmrl-api/u");
+  expect(eh.ename()).resolves.toBe("firetruck");
 });
