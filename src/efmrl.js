@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export class Efmrl {
+export class EfmrlHandle {
   constructor() {
     this._subefmrl = null;
     this._apibase = null;

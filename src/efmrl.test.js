@@ -1,12 +1,12 @@
 import mockAxios from "jest-mock-axios";
-import { Efmrl } from "./efmrl.js";
+import { EfmrlHandle } from "./efmrl.js";
 
 afterEach(() => {
   mockAxios.reset();
 });
 
 it("navigates the happy path", async () => {
-  const eh = new Efmrl();
+  const eh = new EfmrlHandle();
 
   expect(mockAxios.head).toHaveBeenCalled();
 
@@ -28,7 +28,7 @@ it("navigates the happy path", async () => {
 });
 
 it("works if HEAD gets a 404", async () => {
-  const eh = new Efmrl();
+  const eh = new EfmrlHandle();
 
   const ename = "big-billy";
   mockAxios.mockResponse({
@@ -44,7 +44,7 @@ it("works if HEAD gets a 404", async () => {
 });
 
 it("works if HEAD fails outright", async () => {
-  const eh = new Efmrl();
+  const eh = new EfmrlHandle();
 
   delete window.location;
   window.location = new URL("https://firetruck.efmrl.com/crags");
