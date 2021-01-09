@@ -30,16 +30,17 @@ it("navigates the happy path", async () => {
 it("works if HEAD gets a 404", async () => {
   const eh = new Efmrl();
 
+  const ename = "big-billy";
   mockAxios.mockResponse({
       status: 404,
       headers: {
-        "x-efmrl-name": "big-billy",
+        "x-efmrl-name": ename,
         "x-efmrl-api": "/efmrl-api/",
       },
   });
 
   expect(eh.apipath("u")).resolves.toBe("/efmrl-api/u");
-  expect(eh.ename()).resolves.toBe("big-billy");
+  expect(eh.ename()).resolves.toBe(ename);
 });
 
 it("works if HEAD fails outright", async () => {
