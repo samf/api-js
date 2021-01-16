@@ -1,6 +1,6 @@
 {
   "name": "@efmrl/api-js",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "API for efmrls to interact with efmrl.com",
   "main": "dist/efmrl.cjs.js",
   "module": "dist/efmrl.esm.js",
